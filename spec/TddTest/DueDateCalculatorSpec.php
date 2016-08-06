@@ -18,8 +18,9 @@ class DueDateCalculatorSpec extends ObjectBehavior
     }
 
     function it_get_eight_workhours_should_be_next_day() {
-        $dueDate = $this->calculateDueDate(new \DateTimeImmutable('2016-08-03 10:12'), 8);
-        $dueDate->shouldBeLike(new \DateTimeImmutable(('2016-08-04 10:12')));
+        $this
+            ->calculateDueDate(new \DateTimeImmutable('2016-08-03 10:12'), 8)
+            ->shouldBeLike(new \DateTimeImmutable(('2016-08-04 10:12')));
     }
 
     function it_should_not_allow_turnaround_negativ_value() {

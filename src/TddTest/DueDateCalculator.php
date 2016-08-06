@@ -16,21 +16,8 @@ class DueDateCalculator
 
     public function calculateDueDate(\DateTimeImmutable $submitDate, int $turnaroundTime): \DateTimeImmutable
     {
-        if ($turnaroundTime < 0) {
-            throw new \InvalidArgumentException('Turnaround time must be positive value');
-        }
-
-        if (FALSE === in_array($submitDate->format('G'), $this->workingHours)) {
-            throw new \OutOfRangeException(sprintf('Problem can only be reported during working hours. Working hours: (%s)',
-                implode(',', $this->workingHours)
-            ));
-        }
-
-        if (FALSE === in_array($submitDate->format('N'), $this->workingDays)) {
-            throw new \OutOfRangeException(sprintf('Problem can only be reported during working days. Working days: (%s)',
-                implode(',', $this->workingHours)
-            ));
-        }
+        $this->validateTurnaroundTime($turnaroundTime);
+        $this->validateSubmitDate($submitDate);
 
         $currentHours = 0;
         $dueDate = $submitDate;
@@ -47,5 +34,25 @@ class DueDateCalculator
             $currentHours++;
         }
         return $dueDate;
+    }
+
+    protected function validateTurnaroundTime(int $turnaroundTime) {
+        if ($turnaroundTime < 0) {
+            throw new \InvalidArgumentException('Turnaround time must be positive value');
+        }
+    }
+
+    protected function validateSubmitDate(\DateTimeImmutable $submitDate) {
+        if (FALSE === in_array($submitDate->format('G'), $this->workingHours)) {
+            throw new \OutOfRangeException(sprintf('Problem can only be reported during working hours. Working hours: (%s)',
+                implode(',', $this->workingHours)
+            ));
+        }
+
+        if (FALSE === in_array($submitDate->format('N'), $this->workingDays)) {
+            throw new \OutOfRangeException(sprintf('Problem can only be reported during working days. Working days: (%s)',
+                implode(',', $this->workingHours)
+            ));
+        }
     }
 }
