@@ -4,18 +4,25 @@ namespace TddTest;
 
 class DueDateCalculator
 {
+
+    protected $workingHours;
+
+    protected $workingDays;
+
+    public function __construct() {
+        $this->workingDays = range(1, 5);
+        $this->workingHours = range(9, 16);
+    }
+
     public function calculateDueDate(\DateTimeImmutable $submitDate, int $turnaroundTime): \DateTimeImmutable
     {
         if ($turnaroundTime < 0) {
             throw new \InvalidArgumentException('Turnaround time must be positive value');
         }
 
-        $workingHours = range(9, 16);
-        $workingDays = range(1, 5);
-        
-        if (FALSE === in_array($submitDate->format('G'), $workingHours)) {
+        if (FALSE === in_array($submitDate->format('G'), $this->workingHours)) {
             throw new \OutOfRangeException(sprintf('Problem can only be reported during working hours. Working hours: (%s)',
-                implode(',', $workingHours)
+                implode(',', $this->workingHours)
             ));
         }
 
@@ -23,11 +30,11 @@ class DueDateCalculator
         $dueDate = $submitDate;
         while ($turnaroundTime > $currentHours) {
             $dueDate = $dueDate->modify('+1 hour');
-            if (FALSE === in_array($dueDate->format('G'), $workingHours)) {
+            if (FALSE === in_array($dueDate->format('G'), $this->workingHours)) {
                 continue;
             }
 
-            if (FALSE === in_array($dueDate->format('N'), $workingDays)) {
+            if (FALSE === in_array($dueDate->format('N'), $this->workingDays)) {
                 continue;
             }
 
