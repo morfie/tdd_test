@@ -37,7 +37,7 @@ class DueDateCalculator
     }
 
     protected function validateTurnaroundTime(int $turnaroundTime) {
-        if ($turnaroundTime < 0) {
+        if ($turnaroundTime <= 0) {
             throw new \InvalidArgumentException('Turnaround time must be positive value');
         }
     }
