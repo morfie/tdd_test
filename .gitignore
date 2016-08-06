@@ -1,0 +1,4 @@
+/.idea/
+/phpspec.yml
+/vendor/
+/composer.lock

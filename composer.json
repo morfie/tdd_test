@@ -1,0 +1,15 @@
+{
+    "autoload": {
+        "psr-4": { "": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Tests\\": "tests" }
+    },
+    "require": {
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3.0",
+        "memio/spec-gen": "^0.6.1"
+    }
+}
