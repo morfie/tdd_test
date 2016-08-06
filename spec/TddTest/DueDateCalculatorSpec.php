@@ -46,18 +46,26 @@ class DueDateCalculatorSpec extends ObjectBehavior {
     }
 
     function it_should_not_allow_turnaround_negativ_value() {
-        $this->shouldThrow(\InvalidArgumentException::class)->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 10:00'), -100));
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
+            ->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 10:00'), -100));
     }
 
     function it_should_not_allow_turnaround_zero_value() {
-        $this->shouldThrow(\InvalidArgumentException::class)->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 10:00'), 0));
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
+            ->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 10:00'), 0));
     }
 
     function it_should_not_allow_submit_date_out_of_working_hours() {
-        $this->shouldThrow(\OutOfRangeException::class)->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 19:00'), 10));
+        $this
+            ->shouldThrow(\OutOfRangeException::class)
+            ->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 19:00'), 10));
     }
 
     function it_should_not_allow_submit_date_out_of_working_days() {
-        $this->shouldThrow(\OutOfRangeException::class)->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-06 12:00'), 10));
+        $this
+            ->shouldThrow(\OutOfRangeException::class)
+            ->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-06 12:00'), 10));
     }
 }
