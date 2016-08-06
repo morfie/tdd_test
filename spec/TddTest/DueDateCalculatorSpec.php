@@ -23,6 +23,30 @@ class DueDateCalculatorSpec extends ObjectBehavior
             ->shouldBeLike(new \DateTimeImmutable(('2016-08-04 10:12')));
     }
 
+    function it_get_eight_workhours_should_be_next_day_morning() {
+        $this
+            ->calculateDueDate(new \DateTimeImmutable('2016-08-03 09:00'), 8)
+            ->shouldBeLike(new \DateTimeImmutable(('2016-08-04 09:00')));
+    }
+
+    function it_get_a_friday_and_eight_hours_should_be_next_monday() {
+        $this
+            ->calculateDueDate(new \DateTimeImmutable('2016-08-05 16:12'), 8)
+            ->shouldBeLike(new \DateTimeImmutable(('2016-08-08 16:12')));
+    }
+
+    function it_get_a_friday_and_nine_hours_should_be_next_tuesday_morning() {
+        $this
+            ->calculateDueDate(new \DateTimeImmutable('2016-08-05 16:12'), 9)
+            ->shouldBeLike(new \DateTimeImmutable(('2016-08-09 09:12')));
+    }
+
+    function it_get_a_friday_fourty_hours_should_be_two_weeks_later() {
+        $this
+            ->calculateDueDate(new \DateTimeImmutable('2016-08-05 16:12'), 40)
+            ->shouldBeLike(new \DateTimeImmutable(('2016-08-12 16:12')));
+    }
+
     function it_should_not_allow_turnaround_negativ_value() {
         $this->shouldThrow(\InvalidArgumentException::class)->during('calculateDueDate', array(new \DateTimeImmutable('2016-08-04 10:00'), -100));
     }
