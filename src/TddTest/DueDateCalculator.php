@@ -6,7 +6,9 @@ class DueDateCalculator
 {
     public function calculateDueDate(\DateTimeImmutable $submitDate, int $turnaroundTime): \DateTimeImmutable
     {
-        //TODO must be positive
+        if ($turnaroundTime < 0) {
+            throw new \InvalidArgumentException('Turnaround time must be positive value');
+        }
         //TODO must be submit date in working hours
 
         $currentHours = 0;
