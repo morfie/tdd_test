@@ -2,8 +2,7 @@
 
 namespace TddTest;
 
-class DueDateCalculator
-{
+class DueDateCalculator {
 
     protected $workingHours;
 
@@ -14,8 +13,7 @@ class DueDateCalculator
         $this->workingHours = range(9, 16);
     }
 
-    public function calculateDueDate(\DateTimeImmutable $submitDate, int $turnaroundTime): \DateTimeImmutable
-    {
+    public function calculateDueDate(\DateTimeImmutable $submitDate, int $turnaroundTime): \DateTimeImmutable {
         $this->validateTurnaroundTime($turnaroundTime);
         $this->validateSubmitDate($submitDate);
 
@@ -33,6 +31,7 @@ class DueDateCalculator
 
             $currentHours++;
         }
+
         return $dueDate;
     }
 

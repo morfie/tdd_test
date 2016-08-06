@@ -10,10 +10,8 @@ use TddTest\Issue;
 /**
  * @mixin DueDateCalculator
  */
-class DueDateCalculatorSpec extends ObjectBehavior
-{
-    function it_is_initializable()
-    {
+class DueDateCalculatorSpec extends ObjectBehavior {
+    function it_is_initializable() {
         $this->shouldHaveType(DueDateCalculator::class);
     }
 
