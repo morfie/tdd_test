@@ -9,12 +9,18 @@ class DueDateCalculator
         if ($turnaroundTime < 0) {
             throw new \InvalidArgumentException('Turnaround time must be positive value');
         }
-        //TODO must be submit date in working hours
+
+        $workingHours = range(9, 16);
+        $workingDays = range(1, 5);
+        
+        if (FALSE === in_array($submitDate->format('G'), $workingHours)) {
+            throw new \OutOfRangeException(sprintf('Problem can only be reported during working hours. Working hours: (%s)',
+                implode(',', $workingHours)
+            ));
+        }
 
         $currentHours = 0;
         $dueDate = $submitDate;
-        $workingHours = range(9, 16);
-        $workingDays = range(1, 5);
         while ($turnaroundTime > $currentHours) {
             $dueDate = $dueDate->modify('+1 hour');
             if (FALSE === in_array($dueDate->format('G'), $workingHours)) {
