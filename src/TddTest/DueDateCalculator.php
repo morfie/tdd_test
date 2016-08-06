@@ -17,9 +17,10 @@ class DueDateCalculator {
         $this->validateTurnaroundTime($turnaroundTime);
         $this->validateSubmitDate($submitDate);
 
-        $currentHours = 0;
+        $currentHours = $currentDays = 0;
+        $remainderHours = $turnaroundTime % 8;
         $dueDate = $submitDate;
-        while ($turnaroundTime > $currentHours) {
+        while ($remainderHours > $currentHours) {
             $dueDate = $dueDate->modify('+1 hour');
             if (FALSE === in_array($dueDate->format('G'), $this->workingHours)) {
                 continue;
@@ -30,6 +31,16 @@ class DueDateCalculator {
             }
 
             $currentHours++;
+        }
+
+        $turnaroundDays = floor($turnaroundTime / 8);
+        while ($turnaroundDays > $currentDays) {
+            $dueDate = $dueDate->modify('+1 day');
+            if (FALSE === in_array($dueDate->format('N'), $this->workingDays)) {
+                continue;
+            }
+
+            $currentDays++;
         }
 
         return $dueDate;
