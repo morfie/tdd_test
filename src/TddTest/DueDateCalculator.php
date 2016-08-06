@@ -26,6 +26,12 @@ class DueDateCalculator
             ));
         }
 
+        if (FALSE === in_array($submitDate->format('N'), $this->workingDays)) {
+            throw new \OutOfRangeException(sprintf('Problem can only be reported during working days. Working days: (%s)',
+                implode(',', $this->workingHours)
+            ));
+        }
+
         $currentHours = 0;
         $dueDate = $submitDate;
         while ($turnaroundTime > $currentHours) {
